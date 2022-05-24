@@ -1,16 +1,16 @@
 const mongoose = require("mongoose")
 
 const postSchema = mongoose.Schema({
-    firstName: {
+    firstname: {
         type: String,
        require: true
     },
-    lastName:{
+    lastname:{
         type: String,
         requre: true
     },
 
-    dateOfBirth:{
+    dateofbirth:{
         type: String,
         requre: true
     },   

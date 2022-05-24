@@ -1,105 +1,66 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import Navbar from './Navbar';
 
-const Form = () => {
- const navigate = useNavigate()
-    const [formInfo, setFormInfo] = useState({
-        firstname: "",
-        lastname: "",
-        dateofbirth: "",
-        grade: ""
-    })
+const Form = (props) => {
 
-    useEffect(() => {
-        axios.get("http://localhost:4001").then(res => setList(res.data)).catch(error => console.log(error))
-      }, [formInfo]);
+    const { handleChange, handleSubmit, firstname, lastname, dateofbirth, grade } = props;
 
-// const changeRoute = () => {
-//     navigate('/display')
-// }
-
-    const [list, setList] = useState([])
-
-
-    const handleChange = (e) => {
-        setFormInfo({ ...formInfo, [e.target.name]: e.target.value })
-    }
-
-    const handleSubmit = (e)=> {
-        e.preventDefault()
-    //     setList([...list, formInfo])
-    
-    try {
-        const res = axios.post("http://localhost:4001/post", formInfo);
-        return res.status == 200 && axios.get("http://localhost:4001").then(res => setList(res.data)).catch(error => console.log(error))
-        
-    } catch (error) {
-        
-    }
-
-}
 
     return (
         <div>
+            <Navbar />
+            <h1>CAPTURE APP</h1>
 
-<h1>CAPTURE APP</h1>
-
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit} >
+                <div class="form-group">
                     <label>First Name: </label>
                     <input type="text"
-                     placeholder='First Name' 
-                     onChange={handleChange}
-                     name="firstname"
-                     value={formInfo.firstname}
-                     />
-                </div>
-                <div>
+                        placeholder='First Name'
+                        onChange={handleChange}
+                        name="firstname"
+                        value={firstname}
+                        className="form-control"
+                    />
+                </div >
+                <div class="form-group">
                     <label>Last Name: </label>
 
-                    <input type="text" 
-                    placeholder='Last Name'
-                    onChange={handleChange}
-                    // onChange={(e) => setWords(e.target.value)}
+                    <input type="text"
+                        placeholder='Last Name'
+                        onChange={handleChange}
+                        name="lastname"
+                        value={lastname}
+                        className="form-control"
 
-                    name="lastname"
-                    value={formInfo.lastname}
                     />
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Date Of Birth: </label>
 
-                    <input type="date" 
-                    onChange={handleChange}
-                    name="dateofbirth"
-                    value={formInfo.dateofbirth}
+                    <input type="date"
+                        onChange={handleChange}
+                        name="dateofbirth"
+                        value={dateofbirth}
+                        className="form-control"
+
                     />
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Grade: </label>
-                    <input type="number" 
-                    placeholder='Grade' 
-                    onChange={handleChange}
-                    name="grade"
-                    value={formInfo.grade}
+                    <input type="number"
+                        placeholder='Grade'
+                        onChange={handleChange}
+                        name="grade"
+                        value={grade}
+                        className="form-control"
+
                     />
                 </div>
+                <div className='submit-button'>
 
-                <button type="submit">Submit</button>
+                    <button type="submit" class='btn btn-outline-success' >Submit</button>
+                </div>
             </form>
-
-            {list.map((item)=>{
-        return (
-            <ul key={item._id}>
-                <li>{item.firstName}</li>
-                <li>{item.lastName}</li>
-                <li>{item.dateOfBirth}</li>
-                <li>{item.grade}</li>
-            </ul>
-        )
-    })}
-
         </div>
     )
 }

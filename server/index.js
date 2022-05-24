@@ -1,17 +1,23 @@
-const express = require("express");
-const cors = require("cors")
+const express = require('express')
+require('dotenv').config()
 const app = express()
-const port = 4001
-const mongoose = require("mongoose")
-require("dotenv/config")
+const cors = require('cors')
+const port = process.env.PORT
+const URI = process.env.DATA_BASE
+const mongoose = require('mongoose')
+const { saveDetails } = require('./routes/postRoutes')
 
-const ourRoutes = require("./routes/postRoutes")
+
+
+
 
 app.use(express.json())
 app.use(cors())
-app.use('/' , ourRoutes)
-app.use('/post' , ourRoutes)
+mongoose.connect(
+    URI,
+  ).then(res => console.log('("i am connected to mangoDB")')).catch(err => console.log(err))
 
-mongoose.connect(process.env.DATA_BASE, console.log("are you working?"))
+saveDetails(app)
 
-app.listen(port, console.log("app is listening to port 4001"))
+
+app.listen(port, () => console.log(`App listening on port ${port}`))
